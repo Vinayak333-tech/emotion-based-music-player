@@ -1,0 +1,8 @@
+{% extends 'base_layout.html' %}
+{% block content %}
+    <form action="{% url 'playlist:songupload' type %}" method="post" enctype="multipart/form-data" class="mt-3">
+        {%csrf_token%}
+        <div class="song_upload">{{ form.as_p }}</div>
+        <button type="submit" class="btn btn-primary" >Continue</button>
+    </form>
+{% endblock %}

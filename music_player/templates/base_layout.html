@@ -1,0 +1,116 @@
+{% load static %}
+
+<html lang="en">
+<head>
+{% block head %}
+{% endblock %}
+<style>
+ body {
+  margin: 0;
+  padding: 0;
+  width:100vw;
+  height: 100vh;
+  background-color: #eee;
+}
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width:100%;
+  height:100%;
+}
+.loader-wrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #242f3f;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+.loader {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  position: relative;
+  border: 4px solid #Fff;
+  animation: loader 2s infinite ease;
+}
+.loader-inner {
+  vertical-align: top;
+  display: inline-block;
+  width: 100%;
+  background-color: #fff;
+  animation: loader-inner 2s infinite ease-in;
+}
+@keyframes loader {
+  0% { transform: rotate(0deg);}
+  25% { transform: rotate(180deg);}
+  50% { transform: rotate(180deg);}
+  75% { transform: rotate(360deg);}
+  100% { transform: rotate(360deg);}
+}
+@keyframes loader-inner {
+  0% { height: 0%;}
+  25% { height: 0%;}
+  50% { height: 100%;}
+  75% { height: 100%;}
+  100% { height: 0%;}
+}
+</style>
+
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href = "{%static 'style.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Beyond Music</title>
+</head>
+<body>
+  <div class="loader-wrapper">
+      <span class="loader"><span class="loader-inner"></span></span>
+  </div>
+    <header>
+        <div class="logo">
+            <a href="{% url 'startpage' %}"><img class="logoo" src="{% static 'logo.jpg' %}"></a>
+            {% if user.is_authenticated%}
+            <form class="logout-link mt-5 mr-2" action="{%url 'accounts:logout'%}" method="post" style="float:right;">
+                {%csrf_token%}
+                <input type="submit" value="Logout" class="btn btn-warning mt-10">
+            </form>
+            <a href="{%url 'accounts:reset'%}" class="btn btn-danger mt-5 mr-2" style="float:right;"> Reset Password</a>
+            {% else %}
+            <a class="btn btn-success mt-5 mr-3" href="{% url 'accounts:login' %}" style="float:right;">Login</a>
+            {% endif %}
+
+            {% if "/" == request.path %}
+            <a href="{% url 'startpage' %}" class="btn btn-info mt-5 mr-2" style="float:right; display:none;">Home Page</a>
+            {% elif "/accounts/login/" == request.path %}
+            <a href="{% url 'startpage' %}" class="btn btn-info mt-5 mr-2" style="float:right; display:none;">Home Page</a>
+            {% else %}
+            <a href="{% url 'startpage' %}" class="btn btn-info mt-5 mr-2" style="float:right; display:block;">Home Page</a>
+            {% endif %}
+        </div>
+        <div class="wrapper mt-0 ml-3">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </header>
+
+
+
+    <script>
+        $( document ).ready(function() {
+            $(".loader-wrapper").fadeOut("slow");
+        });
+    </script>
+
+
+
+
+</body>
+</html>

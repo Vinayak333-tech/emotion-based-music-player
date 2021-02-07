@@ -1,0 +1,67 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+{% block content %}
+    <a href="{% url 'playlist:songupload' emotion %}" class="btn btn-primary mt-2" style="float:right;">Add Song</a>
+    <h3 align="center" class="text-info"><u>Your {{type}} Playlist</u></h3>
+    {% if messages %}
+        {% for message in messages %}
+        <ul class="text-warning"><strong>{{message}}</strong></ul>
+        {% endfor %}
+    {% endif %}
+    <div style="margin:2%;">
+    
+    <button type="button"  style="float:right;margin-right: 1%;" class="btn btn-dark feedback" value="No" onclick="feedbackHandle(event)">No</button>
+    <button type="button"  style="float:right;margin-right: 1%;" class="btn btn-success feedback" value="Yes" onclick="feedbackHandle(event)">Yes</button>
+    <!-- <input style="float:right;margin-right: 1%;" class="btn btn-dark feedback" type="button" value="No">
+    <input style="float:right;margin-right: 1%;" class="btn btn-success feedback" type="button" value="Yes"> -->
+    
+    <strong style="float:right;margin-right: 1%;" class="feedback">Was the prediction right?</strong>
+    <span id="err" style="display:none;float:right;height:2.5em;margin-right: 2%;" class="alert alert-info" role="alert"></span>
+    </div>
+<br>
+<hr>
+
+
+{% for song in songs %}
+<div class="card mt-2 ml-4" style="width: 17rem;height: 20rem;float:left;">
+    <img class="card-img-top" src="{% static 'download1.jpg' %}" alt="Card image cap">
+    <h5 class="card-title">{{song.name}}</h5>
+    <div>
+    <input type="checkbox" style="width:20px;height:20px;float:right;display:none;margin:2%" class="delMultiple" name="songoption" value="{{song.id}}">
+    {% if song.fav %}
+    <i id="fav{{song.id}}" class="fa fa-heart-o" style="color:red;cursor:pointer;margin-left:1%;font-size:30px" onclick="favchange(event,{{song.id}});"></i>
+    {% else %}
+    <i id="fav{{song.id}}" class="fa fa-heart-o" style="cursor:pointer;margin-left: 1%;font-size:30px;" onclick="favchange(event,{{song.id}});"></i>
+    {% endif %}
+    <a href="{% url 'playlist:playsong' sid=song.id %}" class="btn btn-primary ml-1 mb-1" style="font-size:15px;">Listen song</a>
+    <a href="{% url 'playlist:delete' type=4 id=song.id %}" class="btn btn-danger delsolo ml-1 mb-1" >Delete Song</a>
+    </div>
+</div>
+{% endfor %}
+
+<script>
+    function feedbackHandle(event){
+        var feedback=event.target.value;
+        elements=document.getElementsByClassName("feedback");
+        
+        for(var i=0;i<elements.length;i+=1){
+            elements[i].style.display="none";
+            
+        }
+    
+        element=document.getElementById("err");
+        
+        if (feedback=="Yes"){
+            element.innerText="I love you";
+            element.style.display="initial";
+        
+        }
+        else{
+            element.innerText="Will serve you better next time";
+            element.style.display="initial"; 
+        }
+
+    }
+</script>
+
+{% endblock %}
