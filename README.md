@@ -2,7 +2,7 @@
 
 
 #### The human face plays an important role in knowing an individual's emotion. The required inputs are extracted from the human face directly using a webcam or a static image uploaded by the user. We use these features for  deducing the emotion of an individual.We train a sequential CNN model, consisting of an input layer,three (Convolution+pooling) layers,two fully connected layers and an output layer, on the training images. The prediction of the model helps us  fetch a list of songs that match with the “emotion” derived from the input image provided earlier. This helps the user to listen to songs related to his/her current mood and eliminates the time-consuming task of searching songs related to his/her emotion. Emotion Based Song Player provides four playlists to the users as it captures four emotions namely “Happy”, “Angry”, “Sad” , “Neutral” which can be customised by the user as per his/her taste of music.
-# Machine Learning Algorithms tried and used: 
+# Deep Learning Algorithms tried and used: 
 
 
 ### 1.Bag Of Visual Words
@@ -43,5 +43,5 @@ Screenshots:
 
 ## Contributors:
 #### Mayur Agarwal
-[https://github.com/Vinayak333-tech/]
+[https://github.com/M4yur20]
 
